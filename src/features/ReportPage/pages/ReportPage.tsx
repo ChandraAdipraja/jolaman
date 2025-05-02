@@ -125,7 +125,7 @@ export const ReportPage = () => {
   return (
     <SectionContainer
       padded
-      className="flex min-h-[calc(100vh-144px)] w-full flex-col justify-center pt-4 pb-30 md:pb-0 lg:max-w-screen-md md:pb-4"
+      className="flex min-h-[calc(100vh-144px)] w-full flex-col justify-center pt-4 pb-30  lg:max-w-screen-md md:pb-4"
     >
       <Card>
         <CardHeader>
