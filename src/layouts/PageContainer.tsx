@@ -1,7 +1,6 @@
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef } from "react";
 import { Header } from "./Header";
 import { cn } from "../lib/utils";
-import { GridBackground } from "../components/ui/GridPattern";
 import { CiBullhorn, CiCalculator2, CiHome, CiSearch } from "react-icons/ci";
 import { Link, Outlet, useLocation } from "react-router-dom";
 
@@ -19,7 +18,6 @@ export const PageContainer = forwardRef<
     ref
   ) => {
     const location = useLocation();
-    const [active, setActive] = useState("home");
 
     const menu = [
       { name: "Home", icon: <CiHome className="text-3xl" />, href: "/" },
