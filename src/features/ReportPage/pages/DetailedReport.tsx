@@ -1,14 +1,6 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "../../../components/ui/card";
-import { Button } from "../../../components/ui/button";
 import { SectionContainer } from "../../../layouts/Section";
 import {
   Avatar,
@@ -17,13 +9,14 @@ import {
 } from "../../../components/ui/avatar";
 import { CiBullhorn } from "react-icons/ci";
 import { MdOutlineArrowBackIos } from "react-icons/md";
+import ReportImages from "../components/ReportImages";
 
 // Definisikan tipe data untuk laporan yang akan ditampilkan
 interface Report {
   namaPelapor: string;
   namaPinjol: string;
   deskripsiMasalah: string;
-  buktiMasalah?: string; // URL gambar bukti masalah (optional)
+  buktiMasalah: string; // URL gambar bukti masalah (optional)
   tanggalLaporan: string;
 }
 
@@ -98,12 +91,7 @@ export const DetailedReport = () => {
         <div className="flex flex-col items-center gap-y-4">
           <h1 className="text-md self-start">Bukti Terkait Kasus : </h1>
           <div>
-            <img
-              src={report.buktiMasalah}
-              alt="Bukti Masalah"
-              width={200}
-              height={40}
-            />
+            <ReportImages buktiMasalah={report.buktiMasalah} />
           </div>
           <p className="text-center italic text-sm">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit iste
@@ -116,9 +104,11 @@ export const DetailedReport = () => {
         <div className="flex flex-row items-center justify-between">
           <div className="flex items-center">
             <MdOutlineArrowBackIos className="text-primary" />
-            <h1 className="text-xs text-secondary">Kembali</h1>
+            <Link to="/search" onClick={() => window.history.back()}>
+              <h1 className="text-xs text-secondary">Kembali</h1>
+            </Link>
           </div>
-          <h1 className="text-xs text-secondary">Minggu, 27 Agustus 2025</h1>
+          <h1 className="text-xs text-secondary">{report.tanggalLaporan}</h1>
         </div>
       </div>
     </SectionContainer>

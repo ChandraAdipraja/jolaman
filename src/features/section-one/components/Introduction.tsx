@@ -1,5 +1,5 @@
 import clip from "../../../assets/videos/JOLAMAN.mp4";
-import thumbnail from "../../../assets/img/thumbnail.jpg";
+import thumbnail from "../../../assets/img/JOLAMAN.jpg";
 import { useRef, useState } from "react";
 export const Introduction = () => {
   const videoRef = useRef<HTMLVideoElement>(null);

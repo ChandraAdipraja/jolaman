@@ -93,7 +93,9 @@ export const SearchPage = () => {
 
       {/* Kondisi kalau nggak ketemu apa-apa */}
       {searchTerm !== "" && filteredReports.length === 0 && (
-        <p className="text-center text-gray-400">No results found.</p>
+        <p className="text-center text-gray-400 mt-40">
+          😞 No results found...
+        </p>
       )}
     </SectionContainer>
   );

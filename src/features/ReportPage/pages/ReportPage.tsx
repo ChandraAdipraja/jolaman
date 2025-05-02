@@ -39,63 +39,74 @@ export const ReportPage = () => {
     },
   });
 
+  const uploadMultipleToCloudinary = async (
+    files: File[]
+  ): Promise<string[]> => {
+    const urls: string[] = [];
+
+    for (const file of files) {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "image_pinjol"); // Ganti dengan upload_preset kamu
+
+      try {
+        const response = await fetch(
+          "https://api.cloudinary.com/v1_1/dg5j7kii8/image/upload", // Ganti dengan Cloudinary cloud name kamu
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        const data = await response.json();
+        urls.push(data.secure_url); // Ambil secure_url dari hasil upload
+      } catch (error) {
+        console.error("Error uploading image to Cloudinary:", error);
+        throw new Error("Error uploading images to Cloudinary");
+      }
+    }
+
+    return urls; // Return semua URL gambar dalam array
+  };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const formData = form.getValues();
 
     // Generate UUID untuk laporan
-    const reportId = uuidv4(); // Generate UUID yang unik
+    const reportId = uuidv4();
 
-    // Format tanggal dalam format Indonesia
+    // Format tanggal
     const tanggalLaporan = new Date().toLocaleDateString("id-ID", {
-      weekday: "long", // Nama hari (Senin, Selasa, dst.)
-      day: "2-digit", // Tanggal (27)
-      month: "long", // Nama bulan (April)
-      year: "numeric", // Tahun (2025)
+      weekday: "long",
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
     });
 
-    console.log("Tanggal Laporan: ", tanggalLaporan);
-    console.log("Report ID: ", reportId); // Menampilkan UUID yang dibuat
-
-    // Membuat FormData untuk mengirim data dan file gambar
+    // Siapkan FormData untuk dikirim
     const data = new FormData();
-    data.append("idLaporan", reportId); // Menambahkan UUID ke formData
+    data.append("idLaporan", reportId);
     data.append("namaPelapor", formData.namaPelapor);
     data.append("namaPinjol", formData.namaPinjol);
     data.append("deskripsiMasalah", formData.deskripsiMasalah);
     data.append("tanggalLaporan", tanggalLaporan);
     data.append("statusLaporan", "false"); // Kirim status laporan false
 
-    // If file exists, upload to Cloudinary
-    if (formData.buktiMasalah && formData.buktiMasalah[0]) {
-      const file = formData.buktiMasalah[0];
-
-      // Upload to Cloudinary
-      const formCloudinary = new FormData();
-      formCloudinary.append("file", file);
-      formCloudinary.append("upload_preset", "image_pinjol"); // Replace with your Cloudinary upload preset
-
-      try {
-        // Step 1: Upload to Cloudinary
-        const cloudinaryResponse = await axios.post(
-          "https://api.cloudinary.com/v1_1/dg5j7kii8/image/upload", // Replace with your Cloudinary cloud name
-          formCloudinary
-        );
-
-        const imageUrl = cloudinaryResponse.data.secure_url; // Cloudinary URL
-
-        // Step 2: Append Cloudinary image URL to data
-        data.append("buktiMasalah", imageUrl);
-      } catch (error) {
-        console.error("Error uploading image to Cloudinary:", error);
-        return;
-      }
-    }
-
     try {
-      // Step 3: Submit the form data (including image URL) to your server
+      // Jika ada file, upload ke Cloudinary
+      if (formData.buktiMasalah && formData.buktiMasalah.length > 0) {
+        const files = Array.from(formData.buktiMasalah).slice(0, 5); // Ambil maksimal 5 file
+        const uploadedUrls = await uploadMultipleToCloudinary(files); // Panggil fungsi uploadMultipleToCloudinary
+
+        // Gabungkan URL menjadi satu string
+        const urlsString = uploadedUrls.join(" | ");
+        data.append("buktiMasalah", urlsString); // Simpan URL gambar di FormData
+      }
+
+      // Kirim data ke Google Sheet
       const response = await axios.post(
-        "https://api.sheetbest.com/sheets/0b3a6b09-a17c-4383-b8ca-3329cc59d58c",
+        "https://api.sheetbest.com/sheets/0b3a6b09-a17c-4383-b8ca-3329cc59d58c", // Ganti dengan Sheet ID kamu
         data,
         {
           headers: {
@@ -103,8 +114,9 @@ export const ReportPage = () => {
           },
         }
       );
-      console.log(response.data);
-      form.reset();
+
+      console.log("Response dari Google Sheets: ", response.data);
+      form.reset(); // Reset form setelah submit berhasil
     } catch (error) {
       console.error("Error submitting data:", error);
     }
@@ -182,24 +194,30 @@ export const ReportPage = () => {
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Bukti Masalah (Opsional)</FormLabel>
+                    <FormLabel>
+                      Bukti Masalah (Opsional, max 5 gambar)
+                    </FormLabel>
                     <FormControl>
                       <div className="w-full">
                         <label
                           htmlFor="upload-file"
-                          className="flex flex-col items-center justify-center w-full h-32 px-4 py-6 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 transition"
+                          className="flex flex-col items-center justify-center w-full min-h-[8rem] px-4 py-6 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 transition"
                         >
-                          {/* Cek apakah ada file yang diupload */}
                           {field.value && field.value.length > 0 ? (
-                            <>
-                              {/* Tampilkan nama file yang sudah diupload */}
-                              <p className="text-sm text-gray-600">
-                                {field.value[0].name}
-                              </p>
-                            </>
+                            <div className="flex flex-col items-center gap-2">
+                              {Array.from(field.value).map(
+                                (file: File, index: number) => (
+                                  <p
+                                    key={index}
+                                    className="text-sm text-gray-600"
+                                  >
+                                    {file.name}
+                                  </p>
+                                )
+                              )}
+                            </div>
                           ) : (
                             <>
-                              {/* Kalau belum ada file, tampilkan default logo dan teks */}
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="w-10 h-10 text-gray-400 mb-2"
@@ -224,10 +242,14 @@ export const ReportPage = () => {
                           id="upload-file"
                           type="file"
                           accept="image/*"
+                          multiple
                           onChange={(e) => {
-                            if (e.target.files) {
-                              field.onChange(e.target.files);
+                            const files = e.target.files;
+                            if (files && files.length > 5) {
+                              alert("Maksimal upload 5 gambar saja.");
+                              return;
                             }
+                            field.onChange(files);
                           }}
                           className="hidden"
                         />
