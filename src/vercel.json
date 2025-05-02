@@ -1,5 +1,24 @@
 {
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
-  ]
+ "routes" : [
+    {
+        "src" : "/",
+        "dest" : "/"
+    },
+    {
+        "src" : "/calc",
+        "dest" : "/"
+    },
+    {
+        "src" : "/report",
+        "dest" : "/"
+    },
+    {
+        "src" : "/report/:reportId",
+        "dest" : "/"
+    },
+    {
+        "src" : "/search",
+        "dest" : "/"
+    }
+ ]
 }
