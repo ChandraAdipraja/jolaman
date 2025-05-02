@@ -1,4 +1,4 @@
-import { Route, Router, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import FirstSection from "./features/section-one/pages";
 import { PageContainer } from "./layouts/PageContainer";
 import { CalculatorPage } from "./features/CalcucaltorPage/pages/CalculatorPage";
