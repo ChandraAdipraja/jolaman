@@ -10,16 +10,18 @@ export const Introduction = () => {
   };
   return (
     <div className="bg-secondary rounded-4xl">
-      <div className="flex flex-col items-center justify-center py-8 px-6 text-justify space-y-5">
-        <div className="flex flex-col gap-y-5">
-          <h1 className="text-2xl font-semibold text-white ">Apa Itu Pinjol</h1>
+      <div className="flex flex-col md:flex-col-reverse md:gap-x-10 md:gap-y-10 items-center justify-center py-8 px-6  text-justify space-y-5">
+        <div className="flex flex-col gap-y-5 md:px-6">
+          <h1 className="text-2xl md:text-5xl font-semibold text-white ">
+            Apa Itu Pinjol
+          </h1>
           <p className=" font-light text-md text-white">
             Layanan pinjam uang secara online lewat aplikasi atau situs web,
             biasanya dari perusahaan fintech non-bank, dengan proses cepat dan
             mudah.
           </p>
         </div>
-        <div className="relative w-full max-w-80 h-40 rounded-2xl overflow-hidden">
+        <div className="relative w-full max-w-80 h-40 md:max-w-4xl md:h-[28rem] rounded-2xl overflow-hidden">
           <video
             ref={videoRef}
             src={clip}

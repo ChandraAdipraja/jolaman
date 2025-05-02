@@ -38,7 +38,7 @@ export const PageContainer = forwardRef<
       },
     ];
     return (
-      <div className="h-full w-full">
+      <div className="h-full w-full max-w-screen-lg mx-auto">
         {withHeader && <Header />}
         <main
           ref={ref}
@@ -48,7 +48,7 @@ export const PageContainer = forwardRef<
           {children || <Outlet />}
         </main>
         {withFooter && (
-          <footer className="fixed bottom-0 z-40 w-full border-t-2 border-secondary bg-white shadow-lg p-2">
+          <footer className="md:hidden fixed bottom-0 z-40 w-full border-t-2 border-secondary bg-white shadow-lg p-2">
             <div className="flex justify-between px-6 py-2">
               {menu.map((item) => {
                 const isActive = location.pathname === item.href;
@@ -69,6 +69,11 @@ export const PageContainer = forwardRef<
             </div>
           </footer>
         )}
+        <footer className="hidden md:flex min-h-16 w-full border-t-2 p-4 bg-white">
+          <p className="w-full text-center text-muted-foreground">
+            © 2025 Team Kalkulus II Kelompok 1. All rights reserved
+          </p>
+        </footer>
       </div>
     );
   }

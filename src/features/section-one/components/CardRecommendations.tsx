@@ -8,7 +8,7 @@ const CardRecommendations = () => {
   const images = [btcImage, adakamiImage, asetkuImage, danain];
 
   return (
-    <div className="rounded-md flex flex-col items-center justify-center relative overflow-hidden bg-white dark:bg-black dark:bg-grid-white/[0.05]">
+    <div className=" rounded-md flex flex-col items-center justify-center relative overflow-hidden bg-white dark:bg-black dark:bg-grid-white/[0.05]">
       <InfiniteMovingCards images={images} direction="right" speed="slow" />
       <InfiniteMovingCards images={images} direction="left" speed="slow" />
     </div>

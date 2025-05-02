@@ -48,7 +48,7 @@ export const SearchPage = () => {
   return (
     <SectionContainer
       padded
-      className="flex min-h-[calc(100vh-144px)] w-full flex-col justify-start pt-10 space-y-5"
+      className="flex min-h-[calc(100vh-144px)] w-full flex-col justify-start pt-10 space-y-5 lg:max-w-screen-md"
     >
       {/* Search Input */}
       <div className="mb-4">

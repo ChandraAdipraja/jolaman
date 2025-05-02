@@ -45,11 +45,13 @@ export const TypeOnlineLoan = () => {
     },
   ];
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center md:gap-y-10">
       <div className="pb-4">
-        <h1 className="text-2xl font-semibold text-secondary">Jenis Pinjol</h1>
+        <h1 className="text-2xl md:text-5xl font-semibold text-secondary">
+          Jenis Pinjol
+        </h1>
       </div>
-      <div className="flex flex-col gap-y-10">
+      <div className="flex flex-col md:flex-row md:gap-x-5 gap-y-10">
         <div className="flex flex-col bg-white shadow-2xl rounded-2xl p-8 space-y-4">
           <h1 className="text-3xl font-semibold">Legal</h1>
           <p className="font-light text-sm">

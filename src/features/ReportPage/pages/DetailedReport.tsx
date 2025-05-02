@@ -60,7 +60,7 @@ export const DetailedReport = () => {
   return (
     <SectionContainer
       padded
-      className="flex min-h-[calc(100vh-144px)] pt-4 mb-30"
+      className="flex min-h-[calc(100vh-144px)] pt-4 pb-28 md:pb-4 lg:max-w-screen-md"
     >
       <div className="flex flex-col gap-y-4">
         <div className="flex flex-row items-center gap-x-4 p-2">

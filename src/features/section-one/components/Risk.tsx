@@ -40,25 +40,32 @@ export const Risk = () => {
     },
   ];
   return (
-    <div className="flex flex-col items-center justify-center space-y-3">
-      <div className="pb-4">
-        <h1 className="text-2xl font-semibold text-secondary text-center">
-          Resiko Pinjaman Online
-        </h1>
-        <p className="text-xs font-semibold text-muted-foreground text-center">
-          Harap Perhatikan Beberapa Risiko Berikut Jika Ingin Melakukan Pinjaman
-          Online
-        </p>
-      </div>
-      {risk.map((item) => (
-        <div className="flex flex-row gap-5 justify-start items-center bg-white shadow-xl p-4 rounded-xl">
-          <div className="bg-gray-50 rounded-full p-4">{item.icon}</div>
-          <div className="flex flex-col gap-y-2 text-justify">
-            <h1 className="text-md font-semibold">{item.title}</h1>
-            <p className="text-sm font-light">{item.description}</p>
-          </div>
+    <div className="flex flex-col items-center justify-center space-y-3 md:pb-10">
+      <div>
+        <div className="pb-4 md:space-y-3">
+          <h1 className="text-2xl md:text-5xl font-semibold text-secondary text-center">
+            Resiko Pinjaman Online
+          </h1>
+          <p className="text-xs md:text-sm font-semibold text-muted-foreground text-center">
+            Harap Perhatikan Beberapa Risiko Berikut Jika Ingin Melakukan
+            Pinjaman Online
+          </p>
         </div>
-      ))}
+      </div>
+      <div className="flex flex-wrap gap-4">
+        {risk.map((item, index) => (
+          <div
+            key={index}
+            className="flex flex-row gap-5 items-start bg-white shadow-xl p-4 rounded-xl w-full md:w-[48%]"
+          >
+            <div className="bg-gray-50 rounded-full p-4">{item.icon}</div>
+            <div className="flex flex-col gap-y-2 text-justify">
+              <h1 className="text-md font-semibold">{item.title}</h1>
+              <p className="text-sm font-light">{item.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

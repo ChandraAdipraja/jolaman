@@ -16,7 +16,7 @@ export const SectionContainer = forwardRef<
       <section
         ref={ref}
         className={cn(
-          "container flex flex-col lg:max-w-screen-md mx-auto border-x-2 border-secondary",
+          "container flex flex-col lg:max-w-screen-lg mx-auto ",
           props.minFullscreen &&
             "flex min-h-[calc(100vh-144px)] w-full flex-col",
           className,

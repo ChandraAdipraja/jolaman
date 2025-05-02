@@ -125,7 +125,7 @@ export const ReportPage = () => {
   return (
     <SectionContainer
       padded
-      className="flex min-h-[calc(100vh-144px)] w-full flex-col justify-center pt-4 pb-30"
+      className="flex min-h-[calc(100vh-144px)] w-full flex-col justify-center pt-4 pb-30 md:pb-0 lg:max-w-screen-md md:pb-4"
     >
       <Card>
         <CardHeader>
@@ -179,6 +179,7 @@ export const ReportPage = () => {
                     <FormLabel>Deskripsi Masalah</FormLabel>
                     <FormControl>
                       <Textarea
+                        className="resize-none h-32"
                         placeholder="Ceritakan apa yang terjadi..."
                         {...field}
                       />
@@ -201,7 +202,7 @@ export const ReportPage = () => {
                       <div className="w-full">
                         <label
                           htmlFor="upload-file"
-                          className="flex flex-col items-center justify-center w-full min-h-[8rem] px-4 py-6 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 transition"
+                          className="flex flex-col items-center justify-center w-full min-h-[10rem] px-4 py-6 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 transition"
                         >
                           {field.value && field.value.length > 0 ? (
                             <div className="flex flex-col items-center gap-2">
