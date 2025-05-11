@@ -10,6 +10,7 @@ import {
 import { CiBullhorn } from "react-icons/ci";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import ReportImages from "../components/ReportImages";
+import { NotFound } from "../../../404NotFound";
 
 // Definisikan tipe data untuk laporan yang akan ditampilkan
 interface Report {
@@ -54,7 +55,7 @@ export const DetailedReport = () => {
   }, [reportId]);
 
   if (!report) {
-    return <div>Loading...</div>;
+    return <NotFound />;
   }
 
   return (
@@ -81,8 +82,8 @@ export const DetailedReport = () => {
         </div>
         <div>
           <h1 className="italic">
-            Telah Melaporkan Academy Pinjol Sebagai Pinjol Yang Kurang Aman, dan
-            dia berkata :
+            Telah Melaporkan {report.namaPinjol} Sebagai Pinjol Yang Kurang
+            Aman, dan dia berkata :
           </h1>
         </div>
         <div className="border-l-2 ml-0">

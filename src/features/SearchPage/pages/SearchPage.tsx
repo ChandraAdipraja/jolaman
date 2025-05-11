@@ -12,6 +12,9 @@ import {
 import { Button } from "../../../components/ui/button";
 import { Link } from "react-router-dom";
 import { Input } from "../../../components/ui/input";
+import notFoundImage from "../../../assets/img/notfound.png";
+import defaultImage from "../../../assets/img/result.png";
+import loadingGif from "../../../assets/videos/loading.webm";
 
 export const SearchPage = () => {
   const [reports, setReports] = useState<any[]>([]);
@@ -35,7 +38,19 @@ export const SearchPage = () => {
       });
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <div className="fixed inset-0  flex items-center justify-center bg-white">
+        <video
+          src={loadingGif}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-40 h-40"
+        />
+      </div>
+    );
 
   const filteredReports = reports.filter((report) => {
     const statusTrue = String(report.statusLaporan).toLowerCase() === "true";
@@ -57,9 +72,18 @@ export const SearchPage = () => {
           placeholder="Cari Nama Pinjol..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full p-2 border rounded-md"
+          className="w-full p-2 border rounded-md border-secondary"
         />
       </div>
+
+      {searchTerm === "" && (
+        <img
+          src={defaultImage}
+          alt="start searching"
+          width={500}
+          className="mx-auto opacity-70"
+        />
+      )}
 
       {/* List Card */}
       {searchTerm !== "" && filteredReports.length > 0 && (
@@ -93,9 +117,12 @@ export const SearchPage = () => {
 
       {/* Kondisi kalau nggak ketemu apa-apa */}
       {searchTerm !== "" && filteredReports.length === 0 && (
-        <p className="text-center text-gray-400 mt-40">
-          😞 No results found...
-        </p>
+        <img
+          src={notFoundImage}
+          alt="notfound"
+          width={500}
+          className="mx-auto opacity-70"
+        />
       )}
     </SectionContainer>
   );

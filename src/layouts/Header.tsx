@@ -1,6 +1,8 @@
 import { Toggle } from "../components/ui/toggle";
 import { HiMiniBookOpen } from "react-icons/hi2";
+import { Link, useLocation } from "react-router-dom";
 export const Header = () => {
+  const location = useLocation();
   const menu = [
     { name: "Home", link: "/" },
     { name: "Calculator", link: "/calc" },
@@ -13,18 +15,22 @@ export const Header = () => {
         href={"/"}
         className="text-sm font-bold text-secondary hover:cursor-pointer md:text-3xl"
       >
-        ZOLAMAN
+        JOLAMAN
       </a>
       <div className="flex items-center ml-auto gap-6">
         <nav className="hidden md:flex md:gap-6 items-center">
           {menu.map((item) => (
-            <a
-              href={item.link}
+            <Link
+              to={item.link}
               key={item.name}
-              className="text-base font-semibold text-secondary hover:underline"
+              className={`text-base font-semibold ${
+                location.pathname === item.link
+                  ? "text-primary"
+                  : "text-secondary"
+              }`}
             >
               {item.name}
-            </a>
+            </Link>
           ))}
         </nav>
         <a href="/Assets/pdf/guides.pdf" download={true} target="_blank">

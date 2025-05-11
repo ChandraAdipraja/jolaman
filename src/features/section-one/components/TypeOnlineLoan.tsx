@@ -6,19 +6,19 @@ export const TypeOnlineLoan = () => {
       icon: <FaCheck className="text-primary" />,
     },
     {
-      name: "Chandra Ganteng",
+      name: "Penawaran Melalui Platform Resmi",
       icon: <FaCheck className="text-primary" />,
     },
     {
-      name: "Primodial",
+      name: "Proses Seleksi dan Verifikasi Kredit",
       icon: <FaCheck className="text-primary" />,
     },
     {
-      name: "Suka kamu",
+      name: "Bunga, Biaya, dan Denda Transparan ",
       icon: <FaCheck className="text-primary" />,
     },
     {
-      name: "One Direction",
+      name: "Identitas Perusahaan dan Layanan Pengaduan Jelas ",
       icon: <FaCheck className="text-primary" />,
     },
   ];
@@ -28,19 +28,19 @@ export const TypeOnlineLoan = () => {
       icon: <FaCheck className="text-primary" />,
     },
     {
-      name: "Warjo",
+      name: "Penawaran Melalui Saluran Pribadi (SMS/WhatsApp)",
       icon: <FaCheck className="text-primary" />,
     },
     {
-      name: "Raja Hayam",
+      name: "Proses Pengajuan Tanpa Verifikasi",
       icon: <FaCheck className="text-primary" />,
     },
     {
-      name: "Lazatto",
+      name: "Bunga, Biaya, dan Denda Tidak Transparan",
       icon: <FaCheck className="text-primary" />,
     },
     {
-      name: "Hi-five",
+      name: "Penagihan dengan Ancaman, Teror, atau Intimidasi",
       icon: <FaCheck className="text-primary" />,
     },
   ];
@@ -53,7 +53,7 @@ export const TypeOnlineLoan = () => {
       </div>
       <div className="flex flex-col md:flex-row md:gap-x-5 gap-y-10">
         <div className="flex flex-col bg-white shadow-2xl rounded-2xl p-8 space-y-4">
-          <h1 className="text-3xl font-semibold">Legal</h1>
+          <h1 className="text-3xl font-semibold uppercase">Legal</h1>
           <p className="font-light text-sm">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam,
             sequi!
@@ -68,7 +68,7 @@ export const TypeOnlineLoan = () => {
           </div>
         </div>
         <div className="flex flex-col bg-white shadow-2xl rounded-2xl p-8 space-y-4">
-          <h1 className="text-3xl font-semibold">Illegal</h1>
+          <h1 className="text-3xl font-semibold uppercase">Illegal</h1>
           <p className="font-light text-sm">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam,
             sequi!
