@@ -11,7 +11,7 @@ import {
   Legend as ChartLegend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { FaClipboardCheck, FaInfo } from "react-icons/fa6";
+import { FaInfo } from "react-icons/fa6";
 
 ChartJS.register(
   CategoryScale,
@@ -31,7 +31,6 @@ export const CalculatorPage = () => {
   const [denda, setDenda] = useState("");
   const [tipeHitungan, setTipeHitungan] = useState("majemuk");
   const [mandatoryFieldsValid, setMandatoryFieldsValid] = useState(false);
-  const [info, setInfo] = useState(false);
 
   const [errors, setErrors] = useState<{
     pinjaman: string;
