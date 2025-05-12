@@ -12,31 +12,31 @@ export const Risk = () => {
       icon: <FaGithub className="text-3xl text-violet-500" />,
       title: "Penyebaran data pribadi",
       description:
-        "Suku bunga dan denda yang tinggi dapat mengakibatkan biaya yang besar dan mengurangi hasil pinjaman.",
+        "Data seperti kontak, foto, dan informasi pribadi bisa disebar jika terjadi keterlambatan pembayaran.",
     },
     {
       icon: <FaGithub className="text-3xl text-pink-600" />,
       title: "Teror penagihan",
       description:
-        "Suku bunga dan denda yang tinggi dapat mengakibatkan biaya yang besar dan mengurangi hasil pinjaman.",
+        "Penagihan dilakukan secara kasar, termasuk ancaman, kata-kata kasar, dan intimidasi ke keluarga atau teman.",
     },
     {
       icon: <FaGithub className="text-3xl text-lime-600" />,
       title: "Utang menumpuk",
       description:
-        "Suku bunga dan denda yang tinggi dapat mengakibatkan biaya yang besar dan mengurangi hasil pinjaman.",
+        "Karena bunga tinggi dan sistem gali lubang tutup lubang, utang bisa terus membesar dan sulit dilunasi.",
     },
     {
       icon: <FaGithub className="text-3xl text-shadow-cyan-500" />,
       title: "Gangguan mental",
       description:
-        "Suku bunga dan denda yang tinggi dapat mengakibatkan biaya yang besar dan mengurangi hasil pinjaman.",
+        "Tekanan dari pinjol bisa menyebabkan stres, kecemasan, hingga depresi.",
     },
     {
       icon: <FaGithub className="text-3xl text-yellow-500" />,
       title: "Masalah hukum",
       description:
-        "Suku bunga dan denda yang tinggi dapat mengakibatkan biaya yang besar dan mengurangi hasil pinjaman.",
+        "Jika melibatkan pinjol ilegal, korban bisa terjebak kasus hukum atau kesulitan mencari perlindungan hukum.",
     },
   ];
   return (

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "../../../components/ui/button";
 
 export const Welcome = () => {
@@ -17,17 +18,19 @@ export const Welcome = () => {
         </p>
       </div>
       <div className="flex gap-4 justify-center">
-        <Button variant={"outline"} className="text-secondary">
-          Calculate
-        </Button>
-        <a href="/search">
+        <Link to={"/calc"}>
+          <Button variant={"outline"} className="text-secondary">
+            Calculate
+          </Button>
+        </Link>
+        <Link to={"/search"}>
           <Button
             variant={"secondary"}
-            className="hover:bg-orange-500 text-secondary"
+            className="hover:bg-orange-500 text-white"
           >
             Search Pinjol
           </Button>
-        </a>
+        </Link>
       </div>
     </div>
   );

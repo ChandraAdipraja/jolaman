@@ -34,8 +34,11 @@ export const Header = () => {
           ))}
         </nav>
         <a href="/Assets/pdf/guides.pdf" download={true} target="_blank">
-          <Toggle variant={"outline"} className=" border-secondary">
-            <HiMiniBookOpen className="text-secondary" />
+          <Toggle
+            variant={"outline"}
+            className=" border-secondary hover:border-primary group"
+          >
+            <HiMiniBookOpen className="text-secondary group-hover:text-primary" />
           </Toggle>
         </a>
       </div>

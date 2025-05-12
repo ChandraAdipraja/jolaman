@@ -50,7 +50,9 @@ const FirstSection = () => {
             <div className="pl-5 mt-1 italic">
               Kirim laporan lengkap ke alamat email:{" "}
               <a
-                href="mailto:konsumen@ojk.go.id"
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=konsumen@ojk.go.id"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="underline text-blue-600"
               >
                 konsumen@ojk.go.id
@@ -72,11 +74,19 @@ const FirstSection = () => {
         </ul>
       </div>
 
-      <div className="flex justify-center items-center mt-0">
-        <div className="grid grid-cols-2 grid-rows-2 w-80 h-70 border-2 border-[#15375B] rounded-xl overflow-hidden">
-          <div className="border-b-2 border-r-2 border-[#15375B]"></div>
-          <div className="border-b-2 border-[#15375B]"></div>
-          <div className="border-r-2 border-[#15375B]"></div>
+      <div className="flex justify-center items-center mt-4">
+        <div className="grid grid-cols-2 grid-rows-2 w-80 h-72 md:w-[500px] md:h-[400px] border-[3px] border-[#15375B] rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-[#f0f4f8] to-[#e4ebf2]">
+          {/* Kotak 1 */}
+          <div className="border-b border-r border-[#15375B] hover:bg-[#15375B]/10 transition-all duration-300 md:rounded-tl-2xl"></div>
+
+          {/* Kotak 2 */}
+          <div className="border-b border-[#15375B] hover:bg-[#15375B]/10 transition-all duration-300 md:rounded-tr-2xl"></div>
+
+          {/* Kotak 3 */}
+          <div className="border-r border-[#15375B] hover:bg-[#15375B]/10 transition-all duration-300 md:rounded-bl-2xl"></div>
+
+          {/* Kotak 4 */}
+          <div className="hover:bg-[#15375B]/10 transition-all duration-300 md:rounded-br-2xl"></div>
         </div>
       </div>
 

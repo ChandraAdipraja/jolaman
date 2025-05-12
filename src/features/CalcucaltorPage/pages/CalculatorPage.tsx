@@ -11,7 +11,9 @@ import {
   Legend as ChartLegend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { FaInfo } from "react-icons/fa6";
+import { Input } from "../../../components/ui/input";
+import { Label } from "../../../components/ui/label";
+import { Button } from "../../../components/ui/button";
 
 ChartJS.register(
   CategoryScale,
@@ -336,23 +338,18 @@ export const CalculatorPage = () => {
   return (
     <SectionContainer
       padded
-      className="flex min-h-screen w-full flex-col justify-center items-center mb-20"
+      className="flex min-h-[calc(100vh-144px)] w-full flex-col justify-center pt-4 pb-30 lg:max-w-screen-md md:pb-4"
     >
-      <div className="flex flex-col items-center justify-center space-y-8 max-w-xl w-full p-4">
-        <div className="w-full space-y-4 bg-white border-2 p-4 rounded-2xl">
+      <div className="flex flex-col items-center justify-center w-full p-4">
+        <div className="w-full space-y-4 bg-white border-1 p-4 rounded-2xl ">
           {/* TIPE BUNGA */}
-          <div className="mb-2">
+          <div className="mb-2 flex flex-col gap-2">
             <div className="flex justify-between items-center">
-              <label className="block mb-2">Tipe Perhitungan Bunga:</label>
-              <div className="px-2 py-0.5 outline-2 outline-primary rounded-full">
-                <button>
-                  <FaInfo className="text-xs" />
-                </button>
-              </div>
+              <Label className="block mb-2">Tipe Perhitungan Bunga:</Label>
             </div>
-            <div className="flex space-x-4">
-              <label className="inline-flex items-center">
-                <input
+            <div className="flex space-x-4 gap-y-4">
+              <Label className="inline-flex items-center">
+                <Input
                   type="radio"
                   value="majemuk"
                   checked={tipeHitungan === "majemuk"}
@@ -360,9 +357,9 @@ export const CalculatorPage = () => {
                   className="form-radio h-4 w-4 text-primary"
                 />
                 <span className="ml-2">Bunga Majemuk</span>
-              </label>
-              <label className="inline-flex items-center">
-                <input
+              </Label>
+              <Label className="inline-flex items-center">
+                <Input
                   type="radio"
                   value="flat"
                   checked={tipeHitungan === "flat"}
@@ -370,9 +367,9 @@ export const CalculatorPage = () => {
                   className="form-radio h-4 w-4 text-primary"
                 />
                 <span className="ml-2">Bunga Flat</span>
-              </label>
+              </Label>
             </div>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-gray-500 my-1">
               {tipeHitungan === "majemuk"
                 ? "Bunga majemuk dihitung berdasarkan sisa pinjaman + bunga sebelumnya (beban bunga makin berat)"
                 : "Bunga flat dihitung dari nilai pinjaman awal (lebih rendah dari bunga majemuk)"}
@@ -380,62 +377,62 @@ export const CalculatorPage = () => {
           </div>
 
           {/* PINJAMAN */}
-          <label className="block">
+          <Label className="flex flex-col items-start">
             Jumlah Pinjaman (Rp):
-            <input
+            <Input
               type="text"
               value={pinjaman}
               onChange={handlePinjamanChange}
-              className="mt-1 w-full p-2 border rounded"
               placeholder="Contoh: 1.000.000"
+              className="font-normal"
             />
             {errors.pinjaman && (
               <p className="text-red-500 text-sm mt-1">{errors.pinjaman}</p>
             )}
-          </label>
+          </Label>
 
           {/* BUNGA */}
-          <label className="block">
+          <Label className="flex flex-col items-start">
             Bunga per Bulan (%):
-            <input
+            <Input
               type="number"
               min="0"
               step="0.01"
               value={bunga}
               onChange={handleBungaChange}
-              className="mt-1 w-full p-2 border rounded"
               placeholder="Contoh: 15"
+              className="font-normal"
             />
             {errors.bunga && (
               <p className="text-red-500 text-sm mt-1">{errors.bunga}</p>
             )}
-          </label>
+          </Label>
 
           {/* BULAN */}
-          <label className="block">
+          <Label className="flex flex-col items-start">
             Lama Pinjaman (bulan):
-            <input
+            <Input
               type="number"
               min="1"
               value={bulan}
               onChange={handleBulanChange}
-              className="mt-1 w-full p-2 border rounded"
               placeholder="Contoh: 3"
+              className="font-normal"
             />
             {errors.bulan && (
               <p className="text-red-500 text-sm mt-1">{errors.bulan}</p>
             )}
-          </label>
+          </Label>
 
           {/* TELAT */}
-          <label className="block">
+          <Label className="flex flex-col items-start">
             Jumlah Bulan Terlambat:
-            <input
+            <Input
               type="number"
               min="0"
               value={telat}
               onChange={handleTelatChange}
-              className={`mt-1 w-full p-2 border rounded ${
+              className={`font-normal ${
                 !mandatoryFieldsValid ? "bg-gray-100" : ""
               }`}
               placeholder="Opsional"
@@ -444,38 +441,36 @@ export const CalculatorPage = () => {
             {errors.telat && (
               <p className="text-red-500 text-sm mt-1">{errors.telat}</p>
             )}
-          </label>
+          </Label>
 
           {/* DENDA */}
-          <label className="block">
+          <Label className="flex flex-col items-start">
             Denda per Bulan Telat (% dari pinjaman awal):
-            <input
+            <Input
               type="number"
               min="0"
               step="0.01"
               value={denda}
               onChange={handleDendaChange}
-              className={`mt-1 w-full p-2 border rounded ${
+              className={`font-normal ${
                 !mandatoryFieldsValid ? "bg-gray-100" : ""
               }`}
               placeholder="Opsional"
               disabled={!mandatoryFieldsValid}
             />
-          </label>
+          </Label>
 
-          <button
+          <Button
+            variant={"default"}
             onClick={hitungSimulasi}
-            className="mt-4 w-full bg-primary text-white py-2 rounded shadow hover:opacity-90"
+            className="mt-4 w-full"
           >
             Hitung Simulasi
-          </button>
+          </Button>
 
-          <button
-            onClick={resetForm}
-            className="mt-2 w-full bg-gray-300 text-black py-2 rounded shadow hover:opacity-90"
-          >
+          <Button variant={"outline"} onClick={resetForm} className=" w-full">
             Reset
-          </button>
+          </Button>
         </div>
 
         {hasil && (

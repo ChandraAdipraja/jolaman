@@ -15,13 +15,25 @@ import { Button } from "../../../components/ui/button";
 
 import toast from "react-hot-toast";
 import { useRef } from "react";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-export interface ReportFormData {
-  namaPelapor: string;
-  namaPinjol: string;
-  deskripsiMasalah: string;
-  buktiMasalah: FileList | undefined;
-}
+const formSchema = z.object({
+  namaPelapor: z.string().min(1, {
+    message: "Nama Pelapor harus diisi.",
+  }),
+  namaPinjol: z.string().min(1, {
+    message: "Nama Pinjol harus diisi.",
+  }),
+  deskripsiMasalah: z.string().min(10, {
+    message: "Deskripsi Minimal 10 Karakter",
+  }),
+  buktiMasalah: z.custom<FileList>((files) => files instanceof FileList, {
+    message: "Wajib upload minimal 1 dan maksimal 5 gambar.",
+  }),
+});
+
+type FormData = z.infer<typeof formSchema>;
 
 const uploadMultipleToCloudinary = async (files: File[]): Promise<string[]> => {
   const urls: string[] = [];
@@ -47,7 +59,8 @@ const uploadMultipleToCloudinary = async (files: File[]): Promise<string[]> => {
 };
 
 export const ReportInnerPage = () => {
-  const form = useForm<ReportFormData>({
+  const form = useForm<FormData>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       namaPelapor: "",
       namaPinjol: "",
@@ -106,7 +119,7 @@ export const ReportInnerPage = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
         {/* Nama Pelapor */}
         <FormField
           name="namaPelapor"
@@ -162,14 +175,16 @@ export const ReportInnerPage = () => {
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Bukti Masalah (Opsional, max 5 gambar)</FormLabel>
+              <FormLabel>Bukti Masalah (Max 5)</FormLabel>
               <FormControl>
                 <div className="w-full">
                   <label
                     htmlFor="upload-file"
                     className="flex flex-col items-center justify-center w-full min-h-[10rem] px-4 py-6 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 transition"
                   >
-                    {field.value && field.value.length > 0 ? (
+                    {!form.formState.errors.buktiMasalah &&
+                    field.value &&
+                    field.value.length > 0 ? (
                       <div className="flex flex-col items-center gap-2">
                         {Array.from(field.value).map((file, idx) => (
                           <p key={idx} className="text-sm text-gray-600">
@@ -178,14 +193,13 @@ export const ReportInnerPage = () => {
                         ))}
                       </div>
                     ) : (
-                      <>
-                        <p className="text-gray-400 text-sm">
-                          Drag & Drop or Click to Upload
-                        </p>
-                      </>
+                      <p className="text-gray-400 text-sm">
+                        Drag & Drop or Click to Upload
+                      </p>
                     )}
                   </label>
-                  <input
+                  <Input
+                    name="buktiMasalah"
                     ref={fileInputRef}
                     id="upload-file"
                     type="file"
@@ -193,11 +207,9 @@ export const ReportInnerPage = () => {
                     multiple
                     onChange={(e) => {
                       const files = e.target.files;
-                      if (files && files.length > 5) {
-                        alert("Maksimal upload 5 gambar.");
-                        return;
+                      if (files && files.length <= 5) {
+                        field.onChange(files);
                       }
-                      field.onChange(files);
                     }}
                     className="hidden"
                   />
