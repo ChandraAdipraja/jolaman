@@ -25,23 +25,23 @@ export const TypeOnlineLoan = () => {
   const illegalList = [
     {
       name: "Tidak Terdaftar di Badan Usaha Milik Negara (BUMN)",
-      icon: <FaCheck className="text-primary" />,
+      icon: <FaCheck className="text-red-500" />,
     },
     {
       name: "Penawaran Melalui Saluran Pribadi (SMS/WhatsApp)",
-      icon: <FaCheck className="text-primary" />,
+      icon: <FaCheck className="text-red-500" />,
     },
     {
       name: "Proses Pengajuan Tanpa Verifikasi",
-      icon: <FaCheck className="text-primary" />,
+      icon: <FaCheck className="text-red-500" />,
     },
     {
       name: "Bunga, Biaya, dan Denda Tidak Transparan",
-      icon: <FaCheck className="text-primary" />,
+      icon: <FaCheck className="text-red-500" />,
     },
     {
       name: "Penagihan dengan Ancaman, Teror, atau Intimidasi",
-      icon: <FaCheck className="text-primary" />,
+      icon: <FaCheck className="text-red-500" />,
     },
   ];
   return (

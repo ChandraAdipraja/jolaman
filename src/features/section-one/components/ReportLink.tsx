@@ -1,5 +1,6 @@
 import { CiBullhorn } from "react-icons/ci";
 import { Button } from "../../../components/ui/button";
+import { Link } from "react-router-dom";
 
 export const ReportLink = () => {
   return (
@@ -9,9 +10,16 @@ export const ReportLink = () => {
         <h1 className="text-center text-xl font-semibold text-secondary">
           Atau Report Di Platform Kami Dibawah
         </h1>
-        <Button variant={"outline"} className="border-red-500 text-red-500">
-          Report
-        </Button>
+        <div className="flex gap-4 justify-center">
+          <Link to={"/report"}>
+            <Button
+              variant={"outline"}
+              className="border-red-500 text-red-500 w-full"
+            >
+              Report
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -12,6 +12,8 @@ import { MdOutlineArrowBackIos } from "react-icons/md";
 import ReportImages from "../components/ReportImages";
 import { NotFound } from "../../../404NotFound";
 
+import loadingGif from "../../../assets/videos/loading.webm";
+
 // Definisikan tipe data untuk laporan yang akan ditampilkan
 interface Report {
   namaPelapor: string;
@@ -25,6 +27,7 @@ export const DetailedReport = () => {
   const { reportId } = useParams(); // Mengambil ID dari URL
   console.log(reportId);
   const [report, setReport] = useState<Report | null>(null); // Menambahkan tipe data `Report`
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchReportDetail = async () => {
@@ -41,11 +44,14 @@ export const DetailedReport = () => {
           setReport(reportData);
         } else {
           console.error("Report not found!");
+          setReport(null);
         }
 
         console.log(reportData);
       } catch (error) {
         console.error("Error fetching report details:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -53,6 +59,21 @@ export const DetailedReport = () => {
       fetchReportDetail();
     }
   }, [reportId]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center py-[243px]">
+        <video
+          src={loadingGif}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-40 h-40"
+        />
+      </div>
+    );
+  }
 
   if (!report) {
     return <NotFound />;

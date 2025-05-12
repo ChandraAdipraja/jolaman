@@ -40,7 +40,7 @@ export const SearchPage = () => {
 
   if (loading)
     return (
-      <div className="fixed inset-0  flex items-center justify-center bg-white">
+      <div className="flex justify-center items-center py-[243px]">
         <video
           src={loadingGif}
           autoPlay
