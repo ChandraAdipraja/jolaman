@@ -70,9 +70,7 @@ export const ReportInnerPage = () => {
   });
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    const formData = form.getValues();
+  const handleSubmit = async (formData: FormData) => {
     const reportId = uuidv4();
     const tanggalLaporan = new Date().toLocaleDateString("id-ID", {
       weekday: "long",

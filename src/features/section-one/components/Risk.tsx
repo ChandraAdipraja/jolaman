@@ -1,39 +1,43 @@
-import { FaGithub } from "react-icons/fa6";
+import { MdOutlineTrendingUp } from "react-icons/md";
+import { GoLaw } from "react-icons/go";
+import { ImProfile } from "react-icons/im";
+import { FaHeartBroken } from "react-icons/fa";
+import { GiTakeMyMoney, GiTerror } from "react-icons/gi";
 
 export const Risk = () => {
   const risk = [
     {
-      icon: <FaGithub className="text-3xl text-primary" />,
+      icon: <MdOutlineTrendingUp className="text-3xl text-primary" />,
       title: "Bunga dan denda yang tinggi",
       description:
         "Suku bunga dan denda yang tinggi dapat mengakibatkan biaya yang besar dan mengurangi hasil pinjaman.",
     },
     {
-      icon: <FaGithub className="text-3xl text-violet-500" />,
+      icon: <ImProfile className="text-3xl text-violet-500" />,
       title: "Penyebaran data pribadi",
       description:
         "Data seperti kontak, foto, dan informasi pribadi bisa disebar jika terjadi keterlambatan pembayaran.",
     },
     {
-      icon: <FaGithub className="text-3xl text-pink-600" />,
+      icon: <GiTerror className="text-3xl text-pink-600" />,
       title: "Teror penagihan",
       description:
         "Penagihan dilakukan secara kasar, termasuk ancaman, kata-kata kasar, dan intimidasi ke keluarga atau teman.",
     },
     {
-      icon: <FaGithub className="text-3xl text-lime-600" />,
+      icon: <GiTakeMyMoney className="text-3xl text-lime-600" />,
       title: "Utang menumpuk",
       description:
         "Karena bunga tinggi dan sistem gali lubang tutup lubang, utang bisa terus membesar dan sulit dilunasi.",
     },
     {
-      icon: <FaGithub className="text-3xl text-shadow-cyan-500" />,
+      icon: <FaHeartBroken className="text-3xl text-cyan-500" />,
       title: "Gangguan mental",
       description:
         "Tekanan dari pinjol bisa menyebabkan stres, kecemasan, hingga depresi.",
     },
     {
-      icon: <FaGithub className="text-3xl text-yellow-500" />,
+      icon: <GoLaw className="text-3xl text-yellow-500" />,
       title: "Masalah hukum",
       description:
         "Jika melibatkan pinjol ilegal, korban bisa terjebak kasus hukum atau kesulitan mencari perlindungan hukum.",

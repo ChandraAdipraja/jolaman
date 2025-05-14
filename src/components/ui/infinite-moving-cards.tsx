@@ -3,6 +3,11 @@
 import { cn } from "../../lib/utils";
 import React, { useEffect, useState } from "react";
 
+interface ImageItem {
+  src: string;
+  url?: string;
+}
+
 export const InfiniteMovingCards = ({
   images,
   direction = "left",
@@ -10,7 +15,7 @@ export const InfiniteMovingCards = ({
   pauseOnHover = true,
   className,
 }: {
-  images: string[];
+  images: ImageItem[];
   direction?: "left" | "right";
   speed?: "fast" | "normal" | "slow";
   pauseOnHover?: boolean;
@@ -19,11 +24,11 @@ export const InfiniteMovingCards = ({
   const containerRef = React.useRef<HTMLDivElement>(null);
   const scrollerRef = React.useRef<HTMLUListElement>(null);
 
+  const [start, setStart] = useState(false);
+
   useEffect(() => {
     addAnimation();
   }, []);
-
-  const [start, setStart] = useState(false);
 
   function addAnimation() {
     if (containerRef.current && scrollerRef.current) {
@@ -31,9 +36,7 @@ export const InfiniteMovingCards = ({
 
       scrollerContent.forEach((item) => {
         const duplicatedItem = item.cloneNode(true);
-        if (scrollerRef.current) {
-          scrollerRef.current.appendChild(duplicatedItem);
-        }
+        scrollerRef.current?.appendChild(duplicatedItem);
       });
 
       getDirection();
@@ -43,20 +46,16 @@ export const InfiniteMovingCards = ({
   }
 
   const getDirection = () => {
-    if (containerRef.current) {
-      containerRef.current.style.setProperty(
-        "--animation-direction",
-        direction === "left" ? "forwards" : "reverse"
-      );
-    }
+    containerRef.current?.style.setProperty(
+      "--animation-direction",
+      direction === "left" ? "forwards" : "reverse"
+    );
   };
 
   const getSpeed = () => {
-    if (containerRef.current) {
-      const duration =
-        speed === "fast" ? "20s" : speed === "normal" ? "40s" : "80s";
-      containerRef.current.style.setProperty("--animation-duration", duration);
-    }
+    const duration =
+      speed === "fast" ? "20s" : speed === "normal" ? "40s" : "80s";
+    containerRef.current?.style.setProperty("--animation-duration", duration);
   };
 
   return (
@@ -75,13 +74,23 @@ export const InfiniteMovingCards = ({
           pauseOnHover && "hover:[animation-play-state:paused]"
         )}
       >
-        {images.map((src, idx) => (
+        {images.map((item, idx) => (
           <li key={idx} className="shrink-0">
-            <img
-              src={src}
-              alt={`scroll-image-${idx}`}
-              className="w-32 h-32 object-contain rounded-xl border border-neutral-200 dark:border-zinc-700"
-            />
+            {item.url ? (
+              <a href={item.url} target="_blank" rel="noopener noreferrer">
+                <img
+                  src={item.src}
+                  alt={`scroll-image-${idx}`}
+                  className="w-32 h-32 object-contain rounded-xl border border-neutral-200 dark:border-zinc-700"
+                />
+              </a>
+            ) : (
+              <img
+                src={item.src}
+                alt={`scroll-image-${idx}`}
+                className="w-32 h-32 object-contain rounded-xl border border-neutral-200 dark:border-zinc-700"
+              />
+            )}
           </li>
         ))}
       </ul>

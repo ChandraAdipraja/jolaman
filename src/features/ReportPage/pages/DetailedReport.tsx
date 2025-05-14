@@ -116,11 +116,11 @@ export const DetailedReport = () => {
             <ReportImages buktiMasalah={report.buktiMasalah} />
           </div>
           <p className="text-center italic text-sm">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit iste
-            ut ducimus odit pariatur, praesentium non quisquam in? Itaque,
-            dolorum! Possimus blanditiis facere ab eligendi inventore odit
-            dolorem sint, voluptatem architecto nisi numquam eos alias quae
-            veniam odio voluptates ad?
+            Terima kasih atas kepedulian Anda dalam melaporkan layanan pinjaman
+            online ilegal. Tindakan ini sangat membantu dalam mencegah penipuan
+            dan melindungi masyarakat dari kerugian. Semoga langkah ini
+            menginspirasi lebih banyak orang untuk berani melawan kejahatan
+            digital demi keamanan bersama.
           </p>
         </div>
         <div className="flex flex-row items-center justify-between">
