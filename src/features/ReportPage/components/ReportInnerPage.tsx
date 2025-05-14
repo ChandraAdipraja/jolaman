@@ -14,7 +14,7 @@ import { Textarea } from "../../../components/ui/textarea";
 import { Button } from "../../../components/ui/button";
 
 import toast from "react-hot-toast";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -59,6 +59,7 @@ const uploadMultipleToCloudinary = async (files: File[]): Promise<string[]> => {
 };
 
 export const ReportInnerPage = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -71,6 +72,7 @@ export const ReportInnerPage = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleSubmit = async (formData: FormData) => {
+    if (isSubmitting) return;
     const reportId = uuidv4();
     const tanggalLaporan = new Date().toLocaleDateString("id-ID", {
       weekday: "long",
@@ -88,6 +90,7 @@ export const ReportInnerPage = () => {
     data.append("statusLaporan", "false");
 
     try {
+      setIsSubmitting(true);
       toast.loading("Mengirim Laporan...");
       if (formData.buktiMasalah && formData.buktiMasalah.length > 0) {
         const files = Array.from(formData.buktiMasalah).slice(0, 5);
@@ -112,6 +115,8 @@ export const ReportInnerPage = () => {
       console.error(error);
       toast.dismiss();
       toast.error("Gagal Mengirim Laporan");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -126,7 +131,11 @@ export const ReportInnerPage = () => {
             <FormItem>
               <FormLabel>Nama Kamu</FormLabel>
               <FormControl>
-                <Input placeholder="Masukkan nama kamu" {...field} />
+                <Input
+                  placeholder="Masukkan nama kamu"
+                  {...field}
+                  disabled={isSubmitting}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -141,7 +150,11 @@ export const ReportInnerPage = () => {
             <FormItem>
               <FormLabel>Nama Pinjol</FormLabel>
               <FormControl>
-                <Input placeholder="Nama pinjol yang dilaporkan" {...field} />
+                <Input
+                  placeholder="Nama pinjol yang dilaporkan"
+                  {...field}
+                  disabled={isSubmitting}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -160,6 +173,7 @@ export const ReportInnerPage = () => {
                   className="resize-none h-32"
                   placeholder="Ceritakan apa yang terjadi..."
                   {...field}
+                  disabled={isSubmitting}
                 />
               </FormControl>
               <FormMessage />
@@ -210,6 +224,7 @@ export const ReportInnerPage = () => {
                       }
                     }}
                     className="hidden"
+                    disabled={isSubmitting}
                   />
                 </div>
               </FormControl>
@@ -218,8 +233,8 @@ export const ReportInnerPage = () => {
           )}
         />
 
-        <Button type="submit" className="w-full">
-          Submit Report
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
+          {isSubmitting ? "Mengirim..." : "Submit Laporan"}
         </Button>
       </form>
     </Form>
