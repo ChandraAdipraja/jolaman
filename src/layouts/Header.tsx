@@ -34,7 +34,11 @@ export const Header = () => {
             </Link>
           ))}
         </nav>
-        <a href="/Assets/pdf/guides.pdf" download={true} target="_blank">
+        <a
+          href="/Assets/pdf/BUKU PANDUAN ZOLAMAN.pdf"
+          download={true}
+          target="_blank"
+        >
           <Toggle
             variant={"outline"}
             className=" border-secondary hover:border-primary group"

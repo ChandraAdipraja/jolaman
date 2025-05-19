@@ -12,11 +12,9 @@ export const Welcome = () => {
       <div className="px-4">
         <p className="text-center font-light text-md text-secondary md:text-lg">
           Jolaman adalah platform edukasi yang hadir untuk melindungi masyarakat
-          dari pinjaman online ilegal. Kami menyajikan informasi yang jelas,
-          mudah dimengerti agar semua orang bisa mengenali ciri-ciri pinjol
-          ilegal, tahu risikonya, serta paham cara menghindari dan
-          melaporkannya. Bareng Jolaman, yuk ciptakan kesadaran finansial yang
-          lebih bijak dan aman.
+          dari pinjaman online ilegal. Menyajikan informasi yang jelas, mudah
+          dimengerti, serta paham cara menghindari dan melaporkannya. Bareng
+          Jolaman, yuk ciptakan kesadaran finansial yang lebih bijak dan aman.
         </p>
       </div>
       <div className="flex gap-4 justify-center">
