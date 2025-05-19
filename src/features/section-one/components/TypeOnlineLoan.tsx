@@ -2,7 +2,7 @@ import { FaCheck } from "react-icons/fa6";
 export const TypeOnlineLoan = () => {
   const legalList = [
     {
-      name: "Terdaftar di Badan Usaha Milik Negara (BUMN)",
+      name: "Terdaftar di Otoritas Jasa Keuangan (OJK)",
       icon: <FaCheck className="text-primary" />,
     },
     {
@@ -24,11 +24,11 @@ export const TypeOnlineLoan = () => {
   ];
   const illegalList = [
     {
-      name: "Tidak Terdaftar di Badan Usaha Milik Negara (BUMN)",
+      name: "Tidak Terdaftar di Otoritas Jasa Keuangan (OJK)",
       icon: <FaCheck className="text-red-500" />,
     },
     {
-      name: "Penawaran Melalui Saluran Pribadi (SMS/WhatsApp)",
+      name: "Penawaran Melalui Saluran Pribadi (SMS/WhatsApp/Telepon)",
       icon: <FaCheck className="text-red-500" />,
     },
     {
@@ -51,7 +51,7 @@ export const TypeOnlineLoan = () => {
           Jenis Pinjol
         </h1>
         <p className="text-xs md:text-sm font-semibold text-muted-foreground">
-          Cara Membedakan Jenis Pinjol Yang Legal dan Illegal
+          Cara Membedakan Jenis Pinjol Legal dan Ilegal
         </p>
       </div>
       <div className="flex flex-col md:flex-row md:gap-x-5 gap-y-10">
@@ -68,7 +68,7 @@ export const TypeOnlineLoan = () => {
           </div>
         </div>
         <div className="flex flex-col bg-white shadow-2xl rounded-2xl p-8 space-y-4">
-          <h1 className="text-3xl font-semibold uppercase">Illegal</h1>
+          <h1 className="text-3xl font-semibold uppercase">Ilegal</h1>
 
           <div className="flex flex-col items-center gap-x-5 gap-y-2">
             {illegalList.map((item) => (

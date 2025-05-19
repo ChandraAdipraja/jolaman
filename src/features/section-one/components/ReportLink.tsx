@@ -8,7 +8,7 @@ export const ReportLink = () => {
       <div className="flex flex-col gap-y-5">
         <CiBullhorn className="-rotate-12 text-primary font-bold text-5xl items-center flex self-center" />
         <h1 className="text-center text-xl font-semibold text-secondary">
-          Atau Report Di Platform Kami Dibawah
+          Atau Lapor Di Platform Kami Dibawah
         </h1>
         <div className="flex gap-4 justify-center">
           <Link to={"/report"}>
@@ -16,7 +16,7 @@ export const ReportLink = () => {
               variant={"outline"}
               className="border-red-500 text-red-500 w-full"
             >
-              Report
+              Lapor
             </Button>
           </Link>
         </div>

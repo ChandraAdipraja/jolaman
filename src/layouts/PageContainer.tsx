@@ -20,19 +20,19 @@ export const PageContainer = forwardRef<
     const location = useLocation();
 
     const menu = [
-      { name: "Home", icon: <CiHome className="text-3xl" />, href: "/" },
+      { name: "Beranda", icon: <CiHome className="text-3xl" />, href: "/" },
       {
-        name: "Calc",
+        name: "Hitung",
         icon: <CiCalculator2 className="text-3xl" />,
         href: "/calc",
       },
       {
-        name: "Report",
+        name: "Lapor",
         icon: <CiBullhorn className="text-3xl" />,
         href: "/report",
       },
       {
-        name: "Search",
+        name: "Cari",
         icon: <CiSearch className="text-3xl" />,
         href: "/search",
       },
@@ -71,7 +71,7 @@ export const PageContainer = forwardRef<
         )}
         <footer className="hidden md:flex min-h-16 w-full border-t-2 p-4 bg-white">
           <p className="w-full text-center text-muted-foreground">
-            © 2025 Team Kalkulus II Kelompok 1. All rights reserved
+            © 2025 Tim Kalkulus II Kelompok 1. Hak cipta dilindungi.
           </p>
         </footer>
       </div>

@@ -4,13 +4,14 @@ import { Link, useLocation } from "react-router-dom";
 export const Header = () => {
   const location = useLocation();
   const menu = [
-    { name: "Home", link: "/" },
-    { name: "Calculator", link: "/calc" },
-    { name: "Report", link: "/report" },
-    { name: "Search", link: "/search" },
+    { name: "Beranda", link: "/" },
+    { name: "Hitung", link: "/calc" },
+    { name: "Lapor", link: "/report" },
+    { name: "Cari", link: "/search" },
   ];
   return (
-    <header className="flex h-16 items-center justify-between border-b-2 border-secondary bg-white px-4 md:h-20 md:px-8 relative">
+    <header className="flex gap-x-3 h-16 items-center justify-between border-b-2 border-secondary bg-white px-4 md:h-20 md:px-8 relative">
+      <img src="/LOGO JOLAMAN.svg" alt="" width={40} />
       <a
         href={"/"}
         className="text-sm font-bold text-secondary hover:cursor-pointer md:text-3xl"

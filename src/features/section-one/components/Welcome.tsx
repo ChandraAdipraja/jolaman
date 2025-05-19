@@ -5,22 +5,24 @@ export const Welcome = () => {
   return (
     <div className="flex flex-col items-center justify-center space-y-8">
       <div>
-        <h1 className="text-5xl md:text-6xl text-center font-semibold text-secondary">
-          JOL <span className="text-primary">JOL</span> JOL
-          <span className="text-primary"> PINJOL</span>
+        <h1 className="text-5xl md:text-6xl text-center font-semibold text-secondary ">
+          J O L <span className="text-primary">A M A N</span>
         </h1>
       </div>
-      <div className="px-9">
+      <div className="px-4">
         <p className="text-center font-light text-md text-secondary md:text-lg">
-          Anomali pinjol yang suka nawarin pinjaman dengan suku bunga yang gede
-          namun tidak sesuai dengan hasil akhirnya, ketahui mana pinjol aman dan
-          tidak aman, ketahui juga suku bunga yang anda dapatkan
+          Jolaman adalah platform edukasi yang hadir untuk melindungi masyarakat
+          dari pinjaman online ilegal. Kami menyajikan informasi yang jelas,
+          mudah dimengerti agar semua orang bisa mengenali ciri-ciri pinjol
+          ilegal, tahu risikonya, serta paham cara menghindari dan
+          melaporkannya. Bareng Jolaman, yuk ciptakan kesadaran finansial yang
+          lebih bijak dan aman.
         </p>
       </div>
       <div className="flex gap-4 justify-center">
         <Link to={"/calc"}>
           <Button variant={"outline"} className="text-secondary">
-            Calculate
+            Hitung
           </Button>
         </Link>
         <Link to={"/search"}>
@@ -28,7 +30,7 @@ export const Welcome = () => {
             variant={"secondary"}
             className="hover:bg-orange-500 text-white"
           >
-            Search Pinjol
+            Cari Pinjol
           </Button>
         </Link>
       </div>

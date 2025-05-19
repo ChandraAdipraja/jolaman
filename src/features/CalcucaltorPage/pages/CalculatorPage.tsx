@@ -14,6 +14,7 @@ import { Line } from "react-chartjs-2";
 import { Input } from "../../../components/ui/input";
 import { Label } from "../../../components/ui/label";
 import { Button } from "../../../components/ui/button";
+import { ChevronDown, ChevronUp } from "lucide-react"; // Import icon components
 
 ChartJS.register(
   CategoryScale,
@@ -33,6 +34,7 @@ export const CalculatorPage = () => {
   const [denda, setDenda] = useState("");
   const [tipeHitungan, setTipeHitungan] = useState("majemuk");
   const [mandatoryFieldsValid, setMandatoryFieldsValid] = useState(false);
+  const [showTable, setShowTable] = useState(false); // State for table visibility
 
   const [errors, setErrors] = useState<{
     pinjaman: string;
@@ -57,10 +59,10 @@ export const CalculatorPage = () => {
       bunga: number;
       pokok: number;
       sisaPinjaman: number;
+      denda: number;
     }>;
   } | null>(null);
 
-  // Format angka menjadi format rupiah
   const formatRupiah = (angka: number): string => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
@@ -74,7 +76,6 @@ export const CalculatorPage = () => {
     return str.replace(/\./g, "").replace(/,/g, "").replace(/[^\d]/g, "");
   };
 
-  // Cek apakah field wajib sudah diisi dengan benar
   useEffect(() => {
     const pinjamanValid =
       pinjaman !== "" && parseFloat(cleanNumber(pinjaman)) > 0;
@@ -108,7 +109,6 @@ export const CalculatorPage = () => {
 
   const handleBulanChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    // Hanya menerima angka positif atau kosong
     if (value === "" || (parseInt(value) > 0 && !value.startsWith("-"))) {
       setBulan(value);
       setErrors((prev) => ({ ...prev, bulan: "" }));
@@ -117,7 +117,6 @@ export const CalculatorPage = () => {
 
   const handleTelatChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    // Hanya menerima angka positif atau kosong
     if (value === "" || (parseInt(value) >= 0 && !value.startsWith("-"))) {
       setTelat(value);
       setErrors((prev) => ({ ...prev, telat: "" }));
@@ -126,7 +125,6 @@ export const CalculatorPage = () => {
 
   const handleDendaChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    // Hanya menerima angka positif atau kosong
     if (value === "" || (parseFloat(value) >= 0 && !value.startsWith("-"))) {
       setDenda(value);
     }
@@ -172,48 +170,60 @@ export const CalculatorPage = () => {
     let totalBayar = 0;
     let angsuranPerBulan = 0;
 
-    // Hitung berdasarkan tipe bunga yang dipilih
     if (tipeHitungan === "majemuk") {
-      // Bunga majemuk (seperti kode awal)
-      const r = 1 + bungaNum / 100;
-      totalBayar = pinjamanNum * Math.pow(r, bulanNum);
-      angsuranPerBulan = totalBayar / bulanNum;
+      // Formula bunga majemuk - EMI calculation
+      const monthlyRate = bungaNum / 100;
+      const numerator =
+        pinjamanNum * monthlyRate * Math.pow(1 + monthlyRate, bulanNum);
+      const denominator = Math.pow(1 + monthlyRate, bulanNum) - 1;
+      angsuranPerBulan = numerator / denominator;
+      totalBayar = angsuranPerBulan * bulanNum;
     } else {
-      // Bunga flat (sederhana)
+      // Bunga flat calculation
       const bungaTotal = pinjamanNum * (bungaNum / 100) * bulanNum;
       totalBayar = pinjamanNum + bungaTotal;
       angsuranPerBulan = totalBayar / bulanNum;
     }
 
-    // Hitung denda jika ada keterlambatan
-    const totalDenda =
-      telatNum > 0 ? pinjamanNum * (dendaNum / 100) * telatNum : 0;
+    // Calculate denda per bulan if there's delay
+    const dendaPerBulan = telatNum > 0 ? pinjamanNum * (dendaNum / 100) : 0;
+    const totalDenda = dendaPerBulan * telatNum;
     const totalAkhir = totalBayar + totalDenda;
 
-    // Buat detail cicilan per bulan
     const detailCicilan = [];
     let sisaPinjaman = pinjamanNum;
 
     for (let i = 1; i <= bulanNum; i++) {
       let bungaBulan = 0;
       let pokok = 0;
+      let dendaBulan = 0;
 
       if (tipeHitungan === "majemuk") {
+        // For compound interest, interest is calculated on remaining balance
         bungaBulan = sisaPinjaman * (bungaNum / 100);
         pokok = angsuranPerBulan - bungaBulan;
       } else {
+        // For flat interest
         bungaBulan = pinjamanNum * (bungaNum / 100);
         pokok = pinjamanNum / bulanNum;
       }
 
+      // Calculate denda for this month
+      if (i > bulanNum - telatNum) {
+        dendaBulan = dendaPerBulan;
+      }
+
       sisaPinjaman -= pokok;
+      // Ensure we don't get negative values due to rounding
+      sisaPinjaman = Math.max(0, sisaPinjaman);
 
       detailCicilan.push({
         bulan: i,
         angsuran: angsuranPerBulan,
         bunga: bungaBulan,
         pokok: pokok,
-        sisaPinjaman: Math.max(0, sisaPinjaman),
+        sisaPinjaman: sisaPinjaman,
+        denda: dendaBulan,
       });
     }
 
@@ -235,6 +245,7 @@ export const CalculatorPage = () => {
     setTipeHitungan("majemuk");
     setHasil(null);
     setMandatoryFieldsValid(false);
+    setShowTable(false);
     setErrors({
       pinjaman: "",
       bunga: "",
@@ -243,17 +254,17 @@ export const CalculatorPage = () => {
     });
   };
 
-  // Mengubah data cicilan untuk grafik Chart.js
   const prepareChartData = () => {
     if (!hasil) return { labels: [], datasets: [] };
 
-    const labels = hasil.detailCicilan.map((item) => `Bulan ${item.bulan}`);
+    const labels = hasil.detailCicilan.map((item) => item.bulan);
 
     const pokokData = hasil.detailCicilan.map((item) => Math.round(item.pokok));
     const bungaData = hasil.detailCicilan.map((item) => Math.round(item.bunga));
     const sisaData = hasil.detailCicilan.map((item) =>
       Math.round(item.sisaPinjaman)
     );
+    const dendaData = hasil.detailCicilan.map((item) => Math.round(item.denda));
 
     return {
       labels,
@@ -288,6 +299,16 @@ export const CalculatorPage = () => {
           pointRadius: 5,
           pointHoverRadius: 8,
         },
+        {
+          label: "Denda Keterlambatan",
+          data: dendaData,
+          borderColor: "#8B5CF6",
+          backgroundColor: "rgba(139, 92, 246, 0.5)",
+          fill: false,
+          tension: 0.4,
+          pointRadius: 5,
+          pointHoverRadius: 8,
+        },
       ],
     };
   };
@@ -309,7 +330,7 @@ export const CalculatorPage = () => {
           label: function (context: any) {
             const label = context.dataset.label || "";
             const value = context.parsed.y || 0;
-            return `${label}: ${formatRupiah(value)}`;
+            return `${label}: Rp ${value.toLocaleString("id-ID")}`;
           },
         },
       },
@@ -331,9 +352,10 @@ export const CalculatorPage = () => {
     },
   };
 
-  // const handleInfoClick = () => {
-  //   setShowModal(true);
-  // };
+  // Toggle table visibility function
+  const toggleTable = () => {
+    setShowTable(!showTable);
+  };
 
   return (
     <SectionContainer
@@ -342,7 +364,6 @@ export const CalculatorPage = () => {
     >
       <div className="flex flex-col items-center justify-center w-full p-4">
         <div className="w-full space-y-4 bg-white border-1 p-4 rounded-2xl ">
-          {/* TIPE BUNGA */}
           <div className="mb-2 flex flex-col gap-2">
             <div className="flex justify-between items-center">
               <Label className="block mb-2">Tipe Perhitungan Bunga:</Label>
@@ -371,8 +392,8 @@ export const CalculatorPage = () => {
             </div>
             <p className="text-xs text-gray-500 my-1">
               {tipeHitungan === "majemuk"
-                ? "Bunga majemuk dihitung berdasarkan sisa pinjaman + bunga sebelumnya (beban bunga makin berat)"
-                : "Bunga flat dihitung dari nilai pinjaman awal (lebih rendah dari bunga majemuk)"}
+                ? "Bunga majemuk dihitung berdasarkan sisa pinjaman (beban bunga semakin ringan seiring waktu)"
+                : "Bunga flat dihitung dari nilai pinjaman awal (bunga tetap sepanjang masa pinjaman)"}
             </p>
           </div>
 
@@ -424,9 +445,8 @@ export const CalculatorPage = () => {
             )}
           </Label>
 
-          {/* TELAT */}
           <Label className="flex flex-col items-start">
-            Jumlah Bulan Terlambat:
+            Jumlah Bulan/Hari Terlambat:
             <Input
               type="number"
               min="0"
@@ -443,9 +463,8 @@ export const CalculatorPage = () => {
             )}
           </Label>
 
-          {/* DENDA */}
           <Label className="flex flex-col items-start">
-            Denda per Bulan Telat (% dari pinjaman awal):
+            Denda per Bulan/Hari Telat (% dari pinjaman awal):
             <Input
               type="number"
               min="0"
@@ -505,7 +524,6 @@ export const CalculatorPage = () => {
               </p>
             </div>
 
-            {/* Grafik Rincian Cicilan */}
             <div className="mt-4 w-full" style={{ height: 300 }}>
               <h3 className="text-lg font-semibold mb-2">Grafik Cicilan:</h3>
               <div className="bg-white p-4 border rounded-lg shadow h-full">
@@ -513,63 +531,67 @@ export const CalculatorPage = () => {
               </div>
             </div>
 
-            {/* Tambahkan tab untuk melihat data tabel jika diperlukan */}
-            <div className="mt-4 w-full">
-              <button
-                className="text-blue-600 underline focus:outline-none"
-                onClick={() => {
-                  // Toggle tampilan tabel (bisa diimplementasikan dengan state tambahan)
-                  const tableContainer =
-                    document.getElementById("tableContainer");
-                  if (tableContainer) {
-                    tableContainer.style.display =
-                      tableContainer.style.display === "none"
-                        ? "block"
-                        : "none";
-                  }
-                }}
-              >
-                Tampilkan/Sembunyikan Data Tabel
-              </button>
-
-              <div
-                id="tableContainer"
-                className="overflow-x-auto mt-2"
-                style={{ display: "none" }}
-              >
-                <table className="min-w-full bg-white border">
-                  <thead>
-                    <tr className="bg-gray-100">
-                      <th className="py-2 px-4 border">Bulan</th>
-                      <th className="py-2 px-4 border">Angsuran</th>
-                      <th className="py-2 px-4 border">Pokok</th>
-                      <th className="py-2 px-4 border">Bunga</th>
-                      <th className="py-2 px-4 border">Sisa Pinjaman</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {hasil.detailCicilan.map((cicilan) => (
-                      <tr key={cicilan.bulan}>
-                        <td className="py-2 px-4 border text-center">
-                          {cicilan.bulan}
-                        </td>
-                        <td className="py-2 px-4 border text-right">
-                          {formatRupiah(cicilan.angsuran)}
-                        </td>
-                        <td className="py-2 px-4 border text-right">
-                          {formatRupiah(cicilan.pokok)}
-                        </td>
-                        <td className="py-2 px-4 border text-right">
-                          {formatRupiah(cicilan.bunga)}
-                        </td>
-                        <td className="py-2 px-4 border text-right">
-                          {formatRupiah(cicilan.sisaPinjaman)}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+            <div className="mt-12 w-full flex flex-col">
+              <div className="p-4 bg-primary text-white rounded text-center relative overflow-hidden group">
+                <button
+                  className="flex items-center justify-center w-full space-x-2 focus:outline-none transition-all duration-300"
+                  onClick={toggleTable}
+                >
+                  <span className="font-medium">
+                    {showTable
+                      ? "Sembunyikan Data Tabel"
+                      : "Tampilkan Data Tabel"}
+                  </span>
+                  <span className="ml-2 transition-transform duration-300">
+                    {showTable ? (
+                      <ChevronUp className="animate-pulse" size={20} />
+                    ) : (
+                      <ChevronDown className="animate-bounce" size={20} />
+                    )}
+                  </span>
+                </button>
               </div>
+
+              {showTable && (
+                <div className="overflow-x-auto mt-2">
+                  <table className="min-w-full bg-white border">
+                    <thead>
+                      <tr className="bg-gray-100">
+                        <th className="py-2 px-4 border">Bulan</th>
+                        <th className="py-2 px-4 border">Angsuran</th>
+                        <th className="py-2 px-4 border">Pokok</th>
+                        <th className="py-2 px-4 border">Bunga</th>
+                        <th className="py-2 px-4 border">Denda</th>
+                        <th className="py-2 px-4 border">Sisa Pinjaman</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {hasil.detailCicilan.map((cicilan) => (
+                        <tr key={cicilan.bulan}>
+                          <td className="py-2 px-4 border text-center">
+                            {cicilan.bulan}
+                          </td>
+                          <td className="py-2 px-4 border text-right">
+                            {formatRupiah(cicilan.angsuran)}
+                          </td>
+                          <td className="py-2 px-4 border text-right">
+                            {formatRupiah(cicilan.pokok)}
+                          </td>
+                          <td className="py-2 px-4 border text-right">
+                            {formatRupiah(cicilan.bunga)}
+                          </td>
+                          <td className="py-2 px-4 border text-right">
+                            {formatRupiah(cicilan.denda)}
+                          </td>
+                          <td className="py-2 px-4 border text-right">
+                            {formatRupiah(cicilan.sisaPinjaman)}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
           </div>
         )}

@@ -98,7 +98,7 @@ export const DetailedReport = () => {
               <h1 className="text-md">{report.namaPelapor}</h1>
               <CiBullhorn className="-rotate-12 text-primary font-bold" />
             </div>
-            <p className="text-xs self-start text-primary">Reporter</p>
+            <p className="text-xs self-start text-primary">Pelapor</p>
           </div>
         </div>
         <div>

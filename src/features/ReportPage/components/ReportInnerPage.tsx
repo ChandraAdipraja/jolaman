@@ -187,7 +187,7 @@ export const ReportInnerPage = () => {
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Bukti Masalah (Max 5)</FormLabel>
+              <FormLabel>Bukti Masalah (Maks: 5)</FormLabel>
               <FormControl>
                 <div className="w-full">
                   <label
@@ -206,7 +206,7 @@ export const ReportInnerPage = () => {
                       </div>
                     ) : (
                       <p className="text-gray-400 text-sm">
-                        Drag & Drop or Click to Upload
+                        Tarik & Taruh atau Tekan untuk unggah file
                       </p>
                     )}
                   </label>
@@ -234,7 +234,7 @@ export const ReportInnerPage = () => {
         />
 
         <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? "Mengirim..." : "Submit Laporan"}
+          {isSubmitting ? "Mengirim..." : "Kirim Laporan"}
         </Button>
       </form>
     </Form>

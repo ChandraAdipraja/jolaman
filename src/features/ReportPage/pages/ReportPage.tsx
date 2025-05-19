@@ -5,10 +5,12 @@ import {
   CardHeader,
   CardTitle,
 } from "../../../components/ui/card";
+import useTitle from "../../../hooks/UseTittle";
 import { SectionContainer } from "../../../layouts/Section";
 import { ReportInnerPage } from "../components/ReportInnerPage";
 
 export const ReportPage = () => {
+  useTitle("Report");
   return (
     <SectionContainer
       padded
@@ -16,7 +18,7 @@ export const ReportPage = () => {
     >
       <Card>
         <CardHeader>
-          <CardTitle>Report Pinjaman Online Illegal</CardTitle>
+          <CardTitle>Lapor Pinjaman Online Ilegal</CardTitle>
           <CardDescription>
             Laporkan jika ada indikasi penipuan.
           </CardDescription>

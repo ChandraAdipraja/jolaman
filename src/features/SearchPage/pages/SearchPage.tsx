@@ -94,11 +94,11 @@ export const SearchPage = () => {
                 <div>
                   <CardTitle>{report.namaPinjol}</CardTitle>
                   <CardDescription>
-                    Report By : {report.namaPelapor}
+                    Pelapor : {report.namaPelapor}
                   </CardDescription>
                 </div>
                 <div className="p-2 bg-red-50 text-red-500 rounded-4xl text-sm">
-                  <p>Danger</p>
+                  <p>Berbahaya</p>
                 </div>
               </CardHeader>
               <CardContent className="flex flex-col text-justify gap-6">
@@ -107,7 +107,7 @@ export const SearchPage = () => {
               <CardFooter className="flex justify-between items-center">
                 <p className="text-xs font-light">{report.tanggalLaporan}</p>
                 <Link key={report.idLaporan} to={`/report/${report.idLaporan}`}>
-                  <Button className="outline">See Detail</Button>
+                  <Button className="outline">Lihat Detail</Button>
                 </Link>
               </CardFooter>
             </Card>

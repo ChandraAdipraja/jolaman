@@ -44,15 +44,15 @@ export const Risk = () => {
     },
   ];
   return (
-    <div className="flex flex-col items-center justify-center space-y-3 md:pb-10">
+    <div className="flex flex-col items-center justify-center space-y-3 m-0">
       <div>
         <div className="pb-4 md:space-y-3">
           <h1 className="text-2xl md:text-5xl font-semibold text-secondary text-center">
-            Resiko Pinjaman Online
+            Resiko Pinjol Ilegal
           </h1>
           <p className="text-xs md:text-sm font-semibold text-muted-foreground text-center">
             Harap Perhatikan Beberapa Risiko Berikut Jika Ingin Melakukan
-            Pinjaman Online
+            Pinjaman online ilegal
           </p>
         </div>
       </div>
